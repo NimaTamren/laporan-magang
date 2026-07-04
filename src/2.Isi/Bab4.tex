@@ -1,0 +1,79 @@
+%---------------------------------------------------------------
+\chapter{\babEmpat}
+%---------------------------------------------------------------
+%---------------------------------------------------------------
+\section{Simpulan}
+%---------------------------------------------------------------
+
+Pelaksanaan kerja magang sebagai \textit{Full-Stack Developer} di PT Pratama
+Nusantara Sakti selama periode 05 Januari 2026 hingga 20 Mei 2026 telah berhasil
+diselesaikan dengan keluaran utama berupa sistem \textit{HR Safety Campus},
+yaitu sebuah aplikasi administrasi tenaga kerja kontrak berbasis web yang
+dibangun menggunakan kerangka kerja Laravel. Berdasarkan seluruh proses yang
+telah dilalui, dapat ditarik beberapa simpulan sebagai berikut:
+
+\begin{enumerate}
+    \item Antarmuka sistem registrasi tenaga kerja berbasis web berhasil
+    dibangun menggunakan \textit{Tailwind CSS} untuk menggantikan antarmuka
+    Microsoft Access yang lama. Antarmuka baru ini bersifat responsif dan ringan
+    sehingga dapat diakses dengan baik oleh tim IT di lapangan melalui berbagai
+    perangkat.
+
+    \item Arsitektur \textit{Role-Based Access Control} (RBAC) berhasil
+    diimplementasikan pada logika \textit{backend} untuk membatasi akses menu
+    sesuai peran masing-masing pengguna. Melalui penerapan prinsip
+    \textit{least privilege}, sistem berhasil memisahkan hak akses antara
+    Administrator dengan pengguna operasional, sehingga celah manipulasi pada
+    proses pencetakan surat izin dan klaim transportasi dapat diperkecil secara
+    signifikan.
+
+    \item Proses pembersihan data (\textit{data cleansing}) dan migrasi data
+    tenaga kerja dari sistem lama ke basis data MySQL berhasil dilaksanakan.
+    Tantangan utama berupa duplikasi Nomor Induk Kependudukan (NIK) berhasil
+    diatasi melalui skrip seleksi data khusus yang memisahkan rekaman ganda
+    serta rekaman yang tidak valid sebelum proses unggah, dengan tetap melakukan
+    konfirmasi kepada pihak klien guna memastikan tidak ada data sah yang
+    terhapus.
+
+    \item Mekanisme validasi data berhasil diperketat melalui sistem, baik pada
+    fitur klaim transportasi yang menerapkan aturan bisnis berlapis maupun pada
+    fitur persetujuan karyawan yang mengevaluasi kelengkapan data secara
+    otomatis. Mekanisme ini efektif dalam meminimalisasi kesalahan input
+    (\textit{human error}) dan menutup celah praktik kecurangan klaim oleh pihak
+    vendor.
+\end{enumerate}
+
+Secara keseluruhan, keenam fitur utama dalam sistem \textit{HR Safety Campus},
+yaitu Registrasi Tenaga Kerja, Klaim Transport, Surat Izin Keluar, Manajemen
+Tarif Transport, Persetujuan Karyawan, dan Manajemen Pengguna, telah berhasil
+dikembangkan dan diintegrasikan. Sistem ini menjawab kebutuhan perusahaan akan
+proses administrasi yang lebih cepat, akurat, dan terpusat dibandingkan sistem
+lokal berbasis Microsoft Access yang digunakan sebelumnya.
+
+%---------------------------------------------------------------
+\section{Saran}
+%---------------------------------------------------------------
+
+Meskipun sistem \textit{HR Safety Campus} telah berhasil dikembangkan dan
+memenuhi kebutuhan dasar perusahaan, terdapat sejumlah saran yang dapat menjadi
+bahan pertimbangan untuk pengembangan lebih lanjut, antara lain:
+
+\begin{enumerate}
+
+    \item Mekanisme validasi data pada saat \textit{import} massal dapat
+    diperkuat dengan menambahkan lapisan validasi otomatis di sisi sistem,
+    seperti pemeriksaan format NIK dan konsistensi tanggal, sehingga data
+    bermasalah dapat terdeteksi lebih dini sebelum masuk ke basis data utama
+    tanpa harus bergantung pada proses pemeriksaan manual.
+
+    \item Penerapan lapisan keamanan tambahan seperti \textit{rate limiting}
+    dan pencatatan \textit{audit log} yang lebih komprehensif dapat
+    dipertimbangkan untuk memperkuat sistem pertahanan terhadap akses tidak sah,
+    mengingat sistem menyimpan data pribadi ribuan tenaga kerja yang bersifat
+    sensitif.
+
+    \item Untuk pelaksanaan kerja magang di masa mendatang, disarankan agar
+    dokumentasi terhadap sistem lama dilakukan secara lebih menyeluruh pada tahap
+    awal. Hal ini akan membantu mempercepat proses pemahaman alur kerja dan
+    mengurangi waktu yang dibutuhkan pada tahap observasi dan migrasi data.
+\end{enumerate}

@@ -1,0 +1,152 @@
+%==============================================================================%
+% BAB 1: PENDAHULUAN
+%==============================================================================%
+ 
+%-----------------------------------------------------------------------------%
+\chapter{\babSatu}
+%-----------------------------------------------------------------------------%
+ 
+\section{Latar Belakang Masalah}
+%-----------------------------------------------------------------------------%
+ 
+Di era digitalisasi saat ini, transformasi teknologi tidak hanya terfokus pada
+sektor teknologi informasi murni, tetapi juga telah merambah secara masif ke
+sektor agrikultur dan perkebunan. Pengelolaan sumber daya manusia dan
+administrasi operasional yang efisien menjadi pilar utama bagi perusahaan
+agrikultur untuk mempertahankan produktivitas di lapangan. Kebutuhan akan sistem
+informasi yang cepat, akurat, dan terpusat menjadi sangat krusial guna
+menghindari kebocoran data dan manipulasi administratif yang merugikan perusahaan
+\cite{almansouri2024hris}.
+ 
+PT Pratama Nusantara Sakti adalah perusahaan yang bergerak di bidang agrikultur,
+tepatnya perkebunan tebu dan produksi gula, dengan wilayah operasional yang cukup
+luas di Ogan Komering Ilir, Sumatera Selatan. Mengingat jumlah tenaga kerja yang
+mencapai ribuan orang, mengelola administrasi harian di lapangan menjadi
+tantangan yang tidak sepele bagi perusahaan. Setiap hari, tim lapangan harus
+menangani proses pendataan karyawan baru, penerbitan surat izin keluar, hingga
+pengajuan klaim penggantian biaya transportasi.
+ 
+Saat ini, tim di lapangan masih menggunakan aplikasi berbasis Microsoft Access
+untuk mengurus registrasi pekerja, cetak surat izin keluar (\textit{permit}),
+hingga pengajuan klaim transportasi (\textit{transport claim}). Masalahnya,
+sistem ini sering mengalami \textit{error} karena tim IT di lapangan kurang
+familiar dalam mengoperasikan basis data Microsoft Access yang bersifat lokal dan
+tidak memiliki antarmuka yang intuitif. Akibatnya, banyak data tenaga kerja yang
+tidak terinput dengan benar ke sistem, dan sering kali terjadi duplikasi data
+seperti Nomor Induk Kependudukan (NIK) yang ganda pada satu basis data
+\cite{ravikanth2024deduplication}.
+ 
+Selain masalah teknis, sistem yang lama juga belum memiliki mekanisme validasi
+yang kuat. Masih ditemukan celah kecurangan dari pihak vendor, seperti klaim
+transport yang diajukan lebih dari satu kali, atau manipulasi jumlah tenaga kerja
+demi keuntungan pribadi. Hal-hal seperti ini jelas merugikan perusahaan secara finansial. Penerapan validasi relasional yang ketat pada tingkat sistem dinilai penting untuk menjaga integritas data transaksi sekaligus menutup celah kecurangan tersebut \cite{zulkarnain2026validasi}.
+Oleh karena itu, muncul kebutuhan mendesak untuk melakukan migrasi
+dari sistem lokal yang rentan tersebut ke sebuah platform berbasis web yang lebih
+rapi dan terpusat, yang kemudian dinamakan \textit{HR Safety Campus}
+\cite{susanti2025hris}.
+Dalam pengembangannya, platform \textit{HR Safety Campus} dibangun di atas
+kerangka kerja Laravel yang menerapkan pola arsitektur
+\textit{Model-View-Controller} (MVC). Pola ini memisahkan logika bisnis,
+pengelolaan data, dan antarmuka secara tegas sehingga struktur kode menjadi
+lebih rapi dan mudah dikembangkan dalam jangka panjang \cite{rahmawati2024mvc}.
+Selain itu, pemilihan Laravel dibandingkan PHP \textit{native} turut
+mempertimbangkan efisiensi dalam pengembangan layanan pertukaran data pada sisi
+\textit{back-end} \cite{ariyanto2024restapi}.
+ 
+Untuk mengatasi celah manipulasi tersebut, sistem baru ini memerlukan mekanisme
+pembatasan hak akses yang ketat berdasarkan peran pengguna di lapangan
+\cite{mary2025rbac, yuricha2023rbac}. Selain itu, karena kondisi lapangan yang dinamis dan
+perangkat yang bervariasi, antarmuka sistem harus dirancang agar sangat responsif
+dan ringan saat diakses oleh tim IT di berbagai lokasi \cite{nandan2024tailwind}.
+Walaupun namanya mengandung unsur \textit{safety}, fokus utama aplikasi ini
+adalah mendigitalisasi registrasi tenaga kerja, mengotomatiskan cetak surat izin,
+dan memperketat validasi klaim transportasi agar tidak ada lagi celah kecurangan
+operasional.
+ 
+%-----------------------------------------------------------------------------%
+\section{Maksud dan Tujuan Kerja Magang}
+%-----------------------------------------------------------------------------%
+ 
+\subsection{Maksud Kerja}
+ 
+\medskip
+ 
+Pelaksanaan kerja magang di PT Pratama Nusantara Sakti sebagai
+\textit{Full-Stack Developer} dimaksudkan untuk memberikan pengalaman nyata
+mengenai siklus pengembangan perangkat lunak (\textit{Software Development Life
+Cycle}) dalam lingkup skala \textit{enterprise}. Melalui kegiatan ini, kegiatan magang 
+dimaksudkan untuk mempelajari secara langsung bagaimana menangani migrasi data dalam 
+jumlah besar, merancang arsitektur keamanan akses berbasis peran, serta beradaptasi dengan 
+ritme kerja profesional dan pola komunikasi langsung dengan klien.
+ 
+\subsection{Tujuan Kerja}
+ 
+\medskip
+ 
+Selama menjalani program magang, terdapat sejumlah tujuan operasional yang
+menjadi fokus penyelesaian masalah, antara lain:
+ 
+\vspace{0.5em}
+ 
+\begin{enumerate}
+    \item Membangun antarmuka (\textit{frontend}) sistem registrasi tenaga kerja berbasis web menggunakan pendekatan \textit{utility-first} \cite{nandan2024tailwind} untuk menggantikan antarmuka Microsoft Access yang lama, dengan siklus pengembangan mengikuti metode \textit{Waterfall} \cite{ardiyanto2023waterfall}.
+    \item Merancang dan mengimplementasikan arsitektur \textit{Role-Based Access Control} (RBAC) pada logika \textit{backend} untuk membatasi akses menu pencetakan surat izin (\textit{permit}) dan klaim transportasi sesuai dengan peran masing-masing pengguna \cite{mary2025rbac}.
+    \item Melakukan pembersihan data (\textit{data cleansing}) dan migrasi
+    sekitar 4.000 data tenaga kerja dari sistem lama ke basis data relasional
+    MySQL, termasuk penanganan duplikasi NIK yang ditemukan selama proses
+    migrasi berlangsung \cite{ravikanth2024deduplication}.
+    \item Memperketat validasi data melalui sistem untuk meminimalisasi kesalahan
+    input (\textit{human error}) dan menutup celah praktik kecurangan klaim
+    oleh pihak vendor.
+\end{enumerate}
+ 
+%-----------------------------------------------------------------------------%
+\section{Waktu dan Prosedur Kerja Magang}
+%-----------------------------------------------------------------------------%
+ 
+\subsection{Waktu Pelaksanaan Kerja}
+ 
+\medskip
+ 
+Kegiatan kerja magang dilaksanakan di PT Pratama Nusantara Sakti. Waktu
+pelaksanaan dan sistem kerja diuraikan sebagai berikut:
+ 
+\vspace{0.5em}
+ 
+\begin{itemize}
+    \item \textbf{Periode Magang:} 05 Januari 2026 sampai dengan 20 Mei 2026.
+    \item \textbf{Posisi:} \textit{Full-Stack Developer}.
+    \item \textbf{Jam Operasional dan Sistem Kerja:} Bekerja secara penuh dari
+    kantor (\textit{Work From Office} / WFO) setiap hari kerja mulai pukul
+    08.00 hingga 17.00 WIB. Seluruh kegiatan operasional harian, termasuk
+    rapat dan koordinasi tim, dilaksanakan secara tatap muka di lingkungan
+    kantor perusahaan.
+\end{itemize}
+ 
+\subsection{Prosedur Pelaksanaan Kerja}
+ 
+\medskip
+ 
+Prosedur pelaksanaan magang dibagi menjadi tiga tahapan utama:
+ 
+\vspace{0.5em}
+ 
+\begin{enumerate}
+    \item \textbf{Tahap Pra-Magang:} Proses rekrutmen diawali dengan pengiriman
+    dokumen lamaran dan portofolio melalui surat elektronik (\textit{e-mail})
+    langsung kepada pihak \textit{Human Resources Department} (HRD)
+    perusahaan. Setelah lolos seleksi awal, prosedur dilanjutkan dengan tahap
+    wawancara \textit{user}. Evaluasi pada tahap ini tidak melibatkan
+    \textit{live coding}, melainkan difokuskan pada pembedahan portofolio,
+    rekam jejak penyelesaian proyek sebelumnya, serta pendalaman keahlian
+    teknis secara lisan.
+    \item \textbf{Tahap Pelaksanaan Magang:} Diawali dengan observasi alur kerja
+    Microsoft Access di lapangan dan penyiapan lingkungan pengembangan lokal
+    pada laptop. Pekerjaan kemudian dilanjutkan dengan eksekusi penulisan kode,
+    pembersihan ribuan baris data CSV, perancangan fungsi \textit{backend}
+    menggunakan kerangka kerja Laravel, hingga konfirmasi kelayakan data dengan
+    pihak klien.
+    \item \textbf{Tahap Pasca-Magang:} Tahap akhir difokuskan pada penyusunan
+    dokumen laporan kerja magang sebagai bentuk pertanggungjawaban akademis
+    kepada pihak universitas.
+\end{enumerate}

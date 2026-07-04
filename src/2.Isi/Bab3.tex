@@ -1,0 +1,325 @@
+%-----------------------------------------------------------------------------%
+\chapter{\babTiga}
+%-----------------------------------------------------------------------------%
+
+%-----------------------------------------------------------------------------%
+\section{Kedudukan dan Koordinasi}
+%-----------------------------------------------------------------------------%
+Selama masa kerja magang yang berlangsung dari 05 Januari 2026 hingga 20 Mei 2026, posisi yang dijalankan adalah \textit{Full-Stack Developer}. Dalam struktur operasional proyek pengembangan \textit{HR Safety Campus}, kedudukan langsung supervisor atau pembimbing lapangan yang bertugas memberikan arahan teknis dan mengevaluasi progres mingguan.
+
+Selain berkoordinasi dengan supervisor, interaksi juga dilakukan klien dan tim operasional lapangan. Koordinasi ini sangat krusial, terutama ketika melakukan validasi temuan data pekerja yang ganda atau duplikat sebelum melakukan proses unggah (\textit{upload}) ke dalam basis data utama.
+
+%-----------------------------------------------------------------------------%
+\section{Tugas yang Dilakukan}
+\label{sec:tugas}
+%-----------------------------------------------------------------------------%
+Sebagai \textit{Full-Stack Developer}, fokus utama pekerjaan ini adalah membangun aplikasi \textit{HR Safety Campus} dari sisi antarmuka (\textit{frontend}) hingga ke logika peladen (\textit{backend}) dan basis data. Berikut adalah rincian tugas yang telah dilakukan selama magang:
+
+\begin{enumerate}
+    \item \textbf{Penyiapan Lingkungan Pengembangan (\textit{Development Environment}):} Melakukan konfigurasi perangkat kerja pada laptop Asus Vivobook, termasuk instalasi \textit{Composer}, pengaturan ekstensi PHP, dan penyiapan struktur proyek berbasis Laravel.
+    \item \textbf{Pengembangan Antarmuka Pengguna:} Merancang dan mengimplementasikan tampilan aplikasi web yang responsif untuk modul registrasi tenaga kerja, cetak \textit{permit}, dan klaim transportasi menggunakan \textit{Tailwind CSS} guna memastikan performa visual halaman manajemen data tetap optimal \cite{nandan2024tailwind}.
+    \item \textbf{Pengembangan Logika \textit{Backend}:} Membangun fungsi-fungsi inti aplikasi menggunakan bahasa pemrograman PHP dengan kerangka kerja Laravel yang mengadopsi pola arsitektur \textit{Model-View-Controller} (MVC) \cite{rahmawati2024mvc} dan pengembangan \textit{REST API} \cite{ariyanto2024restapi}. Proses ini mencakup pembuatan sistem keamanan dengan arsitektur \textit{Role-Based Access Control} (RBAC) untuk membatasi hak akses menu pengguna lapangan dan mencegah manipulasi data \cite{mary2025rbac}.
+    \item \textbf{Pengelolaan dan Migrasi Basis Data:} Melakukan transisi data dari sistem lama (Microsoft Access) ke MySQL. Tugas ini mencakup eksekusi perintah SQL seperti \textit{TRUNCATE} untuk pembersihan data awal, penanganan \textit{file} CSV, dan identifikasi serta sinkronisasi sekitar 4.000 rekaman data karyawan.
+\end{enumerate}
+
+Rincian pekerjaan yang dilakukan setiap minggu selama pelaksanaan kerja magang dapat dilihat pada Tabel \ref{tbl_uraian}.
+
+\begin{longtable}{|c | p{0.72\textwidth}| }
+	\caption{Detail Pekerjaan yang Dilakukan}
+	\label{tbl_uraian} \\
+	\hline
+	\textbf{Minggu Ke-} & \textbf{Pekerjaan yang Dilakukan} \\
+	\hline
+	\endfirsthead
+	\multicolumn{2}{c}{\textit{Lanjutan Tabel \ref{tbl_uraian}}} \\
+	\hline
+	\textbf{Minggu Ke-} & \textbf{Pekerjaan yang Dilakukan} \\
+	\hline
+	\endhead
+	\hline
+	\endfoot
+	\hline
+	\endlastfoot
+	1 & Observasi alur kerja sistem lama berbasis Microsoft Access serta identifikasi kebutuhan sistem baru bersama tim IT. \\
+	\hline
+	2 & Penyiapan \textit{environment} pengembangan (Laravel, Composer, ekstensi PHP, MySQL) dan inisialisasi struktur proyek. \\
+	\hline
+	3 & Perancangan skema basis data dan relasi antar tabel (karyawan, kontraktor, klaim, tarif, dan pengguna). \\
+	\hline
+	4 & Pengembangan kerangka antarmuka dasar menggunakan \textit{Tailwind CSS} serta penyiapan tata letak (\textit{layout}) utama aplikasi. \\
+	\hline
+	5 & Implementasi fitur Registrasi Tenaga Kerja bagian formulir input data pribadi dan data kepegawaian. \\
+	\hline
+	6 & Integrasi data wilayah IndoRegion (provinsi, kabupaten/kota, kecamatan) berbasis pencarian bertingkat pada formulir registrasi. \\
+	\hline
+	7 & Pengembangan penomoran ID karyawan otomatis serta fitur cetak ID Card dalam format PDF menggunakan \textit{library} FPDF. \\
+	\hline
+	8 & Implementasi sistem autentikasi dan arsitektur \textit{Role-Based Access Control} (RBAC) pada \textit{backend}. \\
+	\hline
+	9 & Pengembangan fitur Manajemen Pengguna (\textit{User Management}) beserta pengaturan hak akses granular per menu. \\
+	\hline
+	10 & Pengembangan fitur Manajemen Tarif Transport (\textit{Manage Rates}) berikut mekanisme pengarsipan tarif lama. \\
+	\hline
+	11 & Pengembangan fitur Klaim Transport bagian \texttt{CLAIM\_IN} beserta aturan validasi minimal masa kerja. \\
+	\hline
+	12 & Pengembangan fitur Klaim Transport bagian \texttt{CLAIM\_OUT} dan perhitungan nominal klaim otomatis berbasis tarif. \\
+	\hline
+	13 & Pengembangan fitur Surat Izin Keluar (\textit{Exit Permits}) termasuk penomoran surat jalan otomatis. \\
+	\hline
+	14 & Implementasi pencetakan surat jalan dalam format A4 \textit{landscape} dan pembaruan status karyawan otomatis. \\
+	\hline
+	15 & Pengembangan fitur Persetujuan Karyawan (\textit{Employees Approval}) dengan evaluasi kelengkapan data otomatis. \\
+	\hline
+	16 & Pengujian fungsional menyeluruh terhadap keenam fitur utama serta perbaikan \textit{bug} yang ditemukan. \\
+	\hline
+	17 & Pembersihan data (\textit{data cleansing}) terhadap data tenaga kerja dari sistem lama dan normalisasi format data. \\
+	\hline
+	18 & Pengembangan skrip deteksi duplikasi NIK dan migrasi sekitar 4.000 rekaman data ke basis data MySQL. \\
+	\hline
+	19 & Penyusunan laporan data bermasalah untuk klien serta pemetaan kode kontraktor (\textit{contractor\_id}) dari data vendor. \\
+	\hline
+	20 & Evaluasi akhir, perapian kode, dan penyerahan dokumentasi proyek kepada pihak \textit{supervisor}. \\
+\end{longtable}
+
+%-----------------------------------------------------------------------------%
+\section{Uraian Pelaksanaan Kerja Magang}
+%-----------------------------------------------------------------------------%
+Bagian ini menguraikan secara umum pelaksanaan pekerjaan selama kerja magang, mencakup proses pengembangan keenam fitur utama sistem \textit{HR Safety Campus}, kendala-kendala yang ditemukan selama pelaksanaan, serta solusi yang diterapkan untuk mengatasinya.
+
+%-----------------------------------------------------------------------------%
+\subsection{Proses Pelaksanaan Kerja Magang}
+%-----------------------------------------------------------------------------%
+Selama pelaksanaan kerja magang, terdapat enam fitur utama yang dikembangkan dalam sistem \textit{HR Safety Campus}. Berikut adalah uraian dari masing-masing fitur tersebut beserta cuplikan kode program inti yang merepresentasikan logika utamanya.
+
+\subsubsection*{Registrasi Tenaga Kerja (\textit{Employee Registration})}
+
+Fitur registrasi tenaga kerja merupakan pondasi utama dari seluruh sistem ini. Melalui fitur ini, staf HR dapat mendaftarkan tenaga kerja baru secara digital dengan mengisi data lengkap, mulai dari informasi pribadi seperti nama lengkap, NIK, tanggal lahir, dan jenis kelamin, hingga data kepegawaian seperti tanggal masuk kerja, jabatan, departemen, lokasi kantor, kontraktor yang menaungi, serta foto wajah tenaga kerja. Sistem juga dilengkapi penomoran ID karyawan otomatis dengan format tahun diikuti empat digit urutan (contoh: 20250001), pencarian wilayah bertingkat menggunakan data IndoRegion, penentuan status karyawan secara otomatis, fitur \textit{Re-Hire} untuk memulihkan data karyawan lama, serta cetak ID Card terintegrasi dalam format PDF menggunakan \textit{library} FPDF. Cuplikan logika pembuatan ID karyawan otomatis ditunjukkan pada Kode \ref{lst:reg}.
+
+\begin{lstlisting}[language=PHP, caption={Logika pembuatan ID karyawan otomatis dan penentuan status pada fitur Registrasi}, label={lst:reg}]
+// Membuat ID karyawan: tahun + 4 digit urutan (contoh: 20250001).
+// Urutan diambil dari no_id terbesar tahun berjalan, bukan dari jumlah baris,
+// agar tetap konsisten meskipun ada data yang dihapus.
+$currentYear  = date('Y');
+$lastEmployee = Employee::where('no_id', 'like', $currentYear . '%')
+    ->orderBy('no_id', 'desc')
+    ->first();
+
+$newSequence = $lastEmployee
+    ? ((int) substr($lastEmployee->no_id, 4)) + 1
+    : 1;
+
+$data['no_id'] = $currentYear . str_pad($newSequence, 4, '0', STR_PAD_LEFT);
+
+// Status ditentukan otomatis: Aktif jika data lengkap, Pending jika belum.
+$employee = new Employee($data);
+$employee->status = $employee->isComplete() ? 'Aktif' : 'Pending';
+$employee->save();
+\end{lstlisting}
+
+\subsubsection*{Klaim Transport (\textit{Transport Claim})}
+
+Fitur klaim transport dirancang untuk mengelola administrasi penggantian biaya transportasi bagi tenaga kerja kontrak yang berasal dari luar daerah. Sistem ini mengelola dua jenis klaim, yaitu \texttt{CLAIM\_IN} (klaim kedatangan) dan \texttt{CLAIM\_OUT} (klaim kepulangan), masing-masing dengan aturan bisnis yang ketat. Untuk \texttt{CLAIM\_IN}, karyawan harus telah bekerja minimal 60 hari dan hanya diperbolehkan satu kali dalam setahun. Untuk \texttt{CLAIM\_OUT}, karyawan wajib sudah pernah melakukan \texttt{CLAIM\_IN} sebelumnya, dengan pengecualian karyawan dari departemen \textit{Plantation} yang tidak diperbolehkan mengajukan \texttt{CLAIM\_OUT}. Besaran nominal klaim dihitung otomatis berdasarkan kombinasi departemen dan provinsi asal karyawan, serta mendukung pemrosesan secara \textit{batch} untuk efisiensi waktu. Penerapan aturan bisnis berlapis seperti ini sejalan dengan temuan Zulkarnain dan Doke \cite{zulkarnain2026validasi}, yang menekankan bahwa validasi relasional yang ketat pada tingkat sistem berperan penting dalam menjaga integritas data transaksi sekaligus menutup celah inkonsistensi maupun kecurangan. Cuplikan validasi aturan klaim ditunjukkan pada Kode \ref{lst:claim}.
+
+\begin{lstlisting}[language=PHP, caption={Validasi aturan bisnis berlapis pada fitur Klaim Transport}, label={lst:claim}]
+$daysWorked  = Carbon::parse($emp->join_date)->diffInDays(now());
+$hasClaimIn  = Claim::where('employee_id', $emp->id)->where('type', 'CLAIM_IN')->exists();
+$hasClaimOut = Claim::where('employee_id', $emp->id)->where('type', 'CLAIM_OUT')->exists();
+
+// Evaluasi syarat CLAIM_IN: minimal 60 hari kerja & maksimal 1x per tahun
+$eligibleIn = true;
+if (!$isComplete)            { $eligibleIn = false; $msgIn = 'Status/NIK/Finger kosong'; }
+elseif ($daysWorked < 60)   { $eligibleIn = false; $msgIn = "Baru {$daysWorked} hari (min. 60)"; }
+elseif ($hasClaimIn) {
+    $last = Claim::where('employee_id', $emp->id)->where('type', 'CLAIM_IN')
+        ->latest('date_claim')->first();
+    if (Carbon::parse($last->date_claim)->diffInDays(now()) < 365)
+        { $eligibleIn = false; $msgIn = 'Sudah CLAIM_IN dalam 1 tahun'; }
+}
+
+// Evaluasi syarat CLAIM_OUT: minimal 90 hari kerja & wajib sudah CLAIM_IN
+$eligibleOut = true;
+if (!$isComplete)           { $eligibleOut = false; }
+elseif ($daysWorked < 90)   { $eligibleOut = false; $msgOut = "Baru {$daysWorked} hari (min. 90)"; }
+elseif (!$hasClaimIn)       { $eligibleOut = false; $msgOut = 'Belum pernah CLAIM_IN'; }
+elseif ($hasClaimOut)       { $eligibleOut = false; $msgOut = 'Sudah pernah CLAIM_OUT'; }
+
+// Proteksi tambahan saat penyimpanan: departemen Plantation tidak boleh CLAIM_OUT
+if ($request->type === 'CLAIM_OUT' && stripos($emp->department, 'Plantation') !== false) {
+    continue; // lewati karyawan Plantation
+}
+\end{lstlisting}
+
+\subsubsection*{Surat Izin Keluar (\textit{Exit Permits})}
+
+Fitur surat izin keluar mengelola proses administrasi ketika tenaga kerja akan meninggalkan area kerja, baik sementara (Keluar Kembali) maupun permanen (Keluar Selamanya). Setiap surat jalan yang diterbitkan mendapatkan nomor referensi unik yang digenerate secara otomatis dengan format yang mencakup inisial kontraktor, kode \textit{``PERMIT''}, angka romawi bulan, dan tahun (contoh: 0001/MMJ/PERMIT/VI/2025). Jika jenis izin yang dipilih adalah ``Keluar Selamanya'', sistem secara otomatis mengubah status karyawan menjadi Non-Aktif di basis data. Hasil akhirnya berupa surat jalan yang dapat dicetak dalam format A4 \textit{landscape}, lengkap dengan kop surat, tabel data karyawan, dan kolom tanda tangan. Cuplikan pembuatan nomor surat jalan otomatis ditunjukkan pada Kode \ref{lst:permit}.
+
+\begin{lstlisting}[language=PHP, caption={Pembuatan nomor referensi surat jalan otomatis}, label={lst:permit}]
+// Format: urutan/inisial-kontraktor/PERMIT/bulan-romawi/tahun
+$initial = $this->getInitials($request->contractor_name); // "PT Maju Jaya" -> "MJ"
+$romawi  = $this->getRomawi(now()->month);                // contoh: VI
+$year    = now()->year;
+
+$lastPermit = Permit::whereYear('created_at', $year)
+    ->where('letter_reference', 'LIKE', "%/$initial/PERMIT/$romawi/$year")
+    ->orderBy('id', 'desc')->first();
+
+$newNumber = $lastPermit
+    ? intval(explode('/', $lastPermit->letter_reference)[0]) + 1
+    : 1;
+
+$letterReference = sprintf('%04d/%s/PERMIT/%s/%s', $newNumber, $initial, $romawi, $year);
+
+// Jika izin "Keluar Selamanya", status karyawan otomatis menjadi Non-Aktif
+if ($request->type == 'Keluar Selamanya') {
+    $employee->update(['status' => 'Non-Aktif']);
+}
+\end{lstlisting}
+
+\subsubsection*{Manajemen Tarif Transport (\textit{Manage Rates})}
+
+Fitur ini berfungsi sebagai acuan perhitungan klaim transportasi. HR Manager dapat mengelola master data tarif yang diorganisir berdasarkan dua dimensi utama, yaitu departemen (\textit{Harvesting} atau \textit{Plantation}) dan wilayah asal karyawan (provinsi). Setiap kombinasi memiliki tarif kedatangan (IN) dan kepulangan (OUT) yang berbeda-beda. Mekanisme pembaruan tarif dilengkapi sistem pengarsipan otomatis sehingga data lama tersimpan sebagai arsip untuk keperluan audit. Fitur ini juga mendukung pengunggahan dokumen PDF berupa surat pengesahan tarif resmi dari manajemen sebagai bukti legal penetapan tarif. Cuplikan mekanisme pengarsipan tarif lama ditunjukkan pada Kode \ref{lst:rates}.
+
+\begin{lstlisting}[language=PHP, caption={Mekanisme pengarsipan otomatis saat pembaruan tarif}, label={lst:rates}]
+DB::transaction(function () use ($data, $activePeriod, $newDocumentPath) {
+    // 1. Buat periode arsip baru dari data periode aktif (untuk audit)
+    $archive = RatePeriod::create([
+        'name'          => 'Arsip per ' . Carbon::now()->format('d M Y H:i'),
+        'start_date'    => $activePeriod->start_date,
+        'end_date'      => Carbon::now(),
+        'is_active'     => false,
+        'document_path' => $activePeriod->document_path,
+    ]);
+
+    // 2. Salin seluruh tarif lama ke periode arsip
+    foreach ($activePeriod->rates as $old) {
+        TransportRate::create([
+            'period_id'  => $archive->id,
+            'department' => $old->department,
+            'origin'     => $old->origin,
+            'amount_in'  => $old->amount_in,
+            'amount_out' => $old->amount_out,
+        ]);
+    }
+
+    // 3. Perbarui tarif pada periode aktif dengan input baru
+    foreach ($data['rates'] as $id => $val) {
+        TransportRate::where('id', $id)->update([
+            'amount_in'  => $val['amount_in'],
+            'amount_out' => $val['amount_out'],
+        ]);
+    }
+
+    $activePeriod->document_path = $newDocumentPath; // surat pengesahan PDF baru
+    $activePeriod->save();
+});
+\end{lstlisting}
+
+\subsubsection*{Persetujuan Karyawan (\textit{Employees Approval})}
+
+Fitur \textit{approval} merupakan lapisan kontrol kualitas data sebelum seorang tenaga kerja resmi dianggap aktif dalam sistem. Karyawan yang didaftarkan dengan data belum lengkap akan berstatus \textit{Pending} dan muncul di halaman ini. Sistem secara otomatis mengevaluasi kelengkapan data dan menampilkan label ``Data Lengkap (Siap \textit{Approve})'' atau ``Data Belum Lengkap'' pada setiap baris. Karyawan dengan data tidak lengkap tidak dapat dipilih untuk di-\textit{approve} karena \textit{checkbox}-nya dinonaktifkan otomatis. Admin dapat melakukan \textit{approval} secara massal, dan setiap perubahan status tercatat dalam riwayat histori karyawan untuk keperluan \textit{audit trail}. Cuplikan evaluasi kelengkapan data ditunjukkan pada Kode \ref{lst:approval}.
+
+\begin{lstlisting}[language=PHP, caption={Evaluasi kelengkapan data sebelum proses persetujuan}, label={lst:approval}]
+// Memeriksa kelengkapan seluruh field wajib sebelum karyawan dapat di-approve.
+// Jika salah satu field kosong, checkbox approval pada antarmuka dinonaktifkan.
+public function isComplete()
+{
+    $required = [
+        'no_id', 'fingerprint_id', 'nik', 'birth_date', 'gender',
+        'address', 'province', 'regency', 'district', 'pic',
+        'department', 'office_location', 'join_date', 'position',
+        'contractor_id', 'group_leader', 'photo_path',
+    ];
+
+    foreach ($required as $field) {
+        if (empty($this->$field)) {
+            return false; // data belum lengkap
+        }
+    }
+    return true;
+}
+
+// Saat proses approval massal, sistem memvalidasi ulang sebelum mengaktifkan
+if ($emp && $emp->isComplete()) {
+    $emp->status = 'Aktif';
+    $emp->save();
+}
+\end{lstlisting}
+
+\subsubsection*{Manajemen Pengguna (\textit{User Management})}
+
+Fitur ini memberikan kemampuan kepada administrator sistem untuk mengelola hak akses pengguna aplikasi. Administrator dapat membuat akun pengguna baru, mengatur \textit{password} awal, dan menentukan hak akses secara granular per menu, meliputi akses ke menu Registrasi, \textit{Permit Letter}, \textit{Transport Claim}, dan \textit{Manage Rates}. Sistem mengenal dua level pengguna, yaitu Administrator yang memiliki akses penuh ke seluruh fitur, dan \textit{User} biasa yang hanya dapat mengakses menu yang secara eksplisit diizinkan. Penerapan pembatasan akses ini mengadopsi konsep \textit{Role-Based Access Control} (RBAC) sebagaimana dijelaskan oleh Mary dan Febriyani \cite{mary2025rbac}. Pada sistem ini, RBAC diimplementasikan menggunakan mekanisme \textit{Gate} bawaan Laravel yang didefinisikan secara terpusat. Pengguna dengan atribut \textit{administrator} memperoleh akses penuh melalui \texttt{Gate::before}, sedangkan pengguna biasa hanya dapat membuka menu yang secara eksplisit diizinkan pada kolom \textit{permissions}, sesuai prinsip \textit{least privilege}. Setiap akun memiliki status yang dapat dikontrol: \textit{Active}, \textit{Pending}, atau \textit{Inactive}, serta terdapat mekanisme keamanan yang mencegah administrator menghapus akun miliknya sendiri secara tidak sengaja. Cuplikan definisi \textit{Gate} RBAC ditunjukkan pada Kode \ref{lst:rbac}.
+
+\begin{lstlisting}[language=PHP, caption={Definisi Gate RBAC untuk pembatasan akses menu berdasarkan peran}, label={lst:rbac}]
+// Super admin: akses penuh ke seluruh menu sebelum gerbang lain dievaluasi
+Gate::before(function ($user, $ability) {
+    if ($user->email === 'adminhrsc@gmail.com' || $user->is_admin) {
+        return true;
+    }
+});
+
+// Gerbang akses per menu (prinsip least privilege)
+Gate::define('access-registration', fn ($user) =>
+    ($user->permissions['registration'] ?? '') === 'full');
+
+Gate::define('access-permit', fn ($user) =>
+    ($user->permissions['permit'] ?? '') === 'full');
+
+Gate::define('access-claim', fn ($user) =>
+    ($user->permissions['claim'] ?? '') === 'full');
+
+Gate::define('access-rates', fn ($user) =>
+    ($user->permissions['rates'] ?? '') === 'full');
+
+// Pada antarmuka Blade, menu hanya dirender bila pengguna berwenang:
+// @can('access-claim') ... @endcan
+\end{lstlisting}
+
+%-----------------------------------------------------------------------------%
+\subsection{Kendala yang Ditemukan}
+%-----------------------------------------------------------------------------%
+Dalam proses pengembangan sistem \textit{HR Safety Campus}, terdapat beberapa kendala teknis dan operasional yang dihadapi selama pelaksanaan kerja magang, di antaranya:
+
+\begin{itemize}
+    \item \textbf{Penyiapan Lingkungan Awal:} Pada tahap awal pengerjaan, sempat terjadi masalah kompatibilitas di perangkat pengembangan baru, di mana \textit{Composer} dan beberapa ekstensi PHP tidak terbaca oleh sistem.
+    \item \textbf{Migrasi dan Duplikasi Data Masif:} Saat melakukan migrasi data dari sistem lama, ditemukan banyak sekali duplikasi data tenaga kerja (mencapai ribuan rekaman), terutama pada kolom NIK yang seharusnya unik. Hal ini membuat proses unggah (\textit{upload}) gagal karena melanggar aturan integritas basis data.
+\end{itemize}
+
+%-----------------------------------------------------------------------------%
+\subsection{Solusi atas Kendala yang Ditemukan}
+%-----------------------------------------------------------------------------%
+Solusi yang diterapkan untuk mengatasi kendala-kendala yang ditemukan selama proses pelaksanaan kerja magang adalah sebagai berikut:
+
+\begin{itemize}
+    \item \textbf{Solusi Penyiapan Lingkungan Awal:} Masalah ini diselesaikan dengan melakukan \textit{troubleshooting} pada konfigurasi \textit{environment variables} di sistem operasi dan menginstal ulang paket yang dibutuhkan hingga server pengembangan lokal dapat berjalan dengan normal.
+    \item \textbf{Solusi Migrasi dan Duplikasi Data Masif:} Skrip khusus dibuat untuk menyeleksi dan memisahkan data yang ganda. Sebelum melakukan pembersihan data dengan perintah \textit{TRUNCATE} dan mengunggah ulang \textit{file} CSV yang baru, konfirmasi temuan duplikat ini selalu dilakukan kepada pihak klien untuk memastikan tidak ada data pekerja sah yang tidak sengaja terhapus. Pendekatan deduplikasi berbasis seleksi ini sejalan dengan studi Ravikanth et al. \cite{ravikanth2024deduplication} mengenai pencocokan rekaman otomatis. Cuplikan logika seleksi data tersebut ditunjukkan pada Kode \ref{lst:dedup}.
+\end{itemize}
+
+\begin{lstlisting}[language=PHP, caption={Logika deteksi duplikasi NIK dan pemisahan data valid pada proses migrasi}, label={lst:dedup}]
+$validRows = []; $problemRows = []; $seenNik = [];
+
+foreach ($rows as $row) {
+    $nik = trim($row['nik']);
+
+    // 1. NIK harus berupa 16 digit angka murni
+    if (! preg_match('/^[0-9]{16}$/', $nik)) {
+        $problemRows[] = [$row, 'NIK tidak valid'];
+        continue;
+    }
+    // 2. NIK tidak boleh ganda dalam satu berkas
+    if (in_array($nik, $seenNik)) {
+        $problemRows[] = [$row, 'NIK duplikat dalam berkas'];
+        continue;
+    }
+    // 3. NIK tidak boleh sudah terdaftar di basis data
+    if (Employee::where('nik', $nik)->exists()) {
+        $problemRows[] = [$row, 'NIK sudah terdaftar'];
+        continue;
+    }
+
+    $seenNik[]   = $nik;
+    $validRows[] = $row;
+}
+
+// Hanya rekaman valid yang diunggah; rekaman bermasalah dilaporkan ke klien
+DB::table('employees')->insert($validRows);
+\end{lstlisting}
