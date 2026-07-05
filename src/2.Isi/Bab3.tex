@@ -5,9 +5,9 @@
 %-----------------------------------------------------------------------------%
 \section{Kedudukan dan Koordinasi}
 %-----------------------------------------------------------------------------%
-Selama masa kerja magang yang berlangsung dari 05 Januari 2026 hingga 20 Mei 2026, posisi yang dijalankan adalah \textit{Full-Stack Developer}. Dalam struktur operasional proyek pengembangan \textit{HR Safety Campus}, kedudukan langsung supervisor atau pembimbing lapangan yang bertugas memberikan arahan teknis dan mengevaluasi progres mingguan.
+Selama masa kerja magang yang berlangsung dari 05 Januari 2026 hingga 20 Mei 2026, posisi yang dijalankan adalah \textit{Full-Stack Developer}. Dalam struktur operasional proyek pengembangan \textit{HR Safety Campus}, pelaksanaan magang berada di bawah pengawasan langsung supervisor atau pembimbing lapangan yang bertugas memberikan arahan teknis dan mengevaluasi progres mingguan.
 
-Selain berkoordinasi dengan supervisor, interaksi juga dilakukan klien dan tim operasional lapangan. Koordinasi ini sangat krusial, terutama ketika melakukan validasi temuan data pekerja yang ganda atau duplikat sebelum melakukan proses unggah (\textit{upload}) ke dalam basis data utama.
+Selain berkoordinasi dengan supervisor, interaksi juga dilakukan dengan klien dan tim operasional lapangan. Koordinasi ini sangat krusial, terutama ketika melakukan validasi temuan data pekerja yang ganda atau duplikat sebelum melakukan proses unggah (\textit{upload}) ke dalam basis data utama.
 
 %-----------------------------------------------------------------------------%
 \section{Tugas yang Dilakukan}
@@ -84,12 +84,158 @@ Rincian pekerjaan yang dilakukan setiap minggu selama pelaksanaan kerja magang d
 %-----------------------------------------------------------------------------%
 \section{Uraian Pelaksanaan Kerja Magang}
 %-----------------------------------------------------------------------------%
-Bagian ini menguraikan secara umum pelaksanaan pekerjaan selama kerja magang, mencakup proses pengembangan keenam fitur utama sistem \textit{HR Safety Campus}, kendala-kendala yang ditemukan selama pelaksanaan, serta solusi yang diterapkan untuk mengatasinya.
+Bagian ini menguraikan secara umum pelaksanaan pekerjaan selama kerja magang, mencakup proses perancangan dan pengembangan keenam fitur utama sistem \textit{HR Safety Campus}, kendala-kendala yang ditemukan selama pelaksanaan, serta solusi yang diterapkan untuk mengatasinya.
 
 %-----------------------------------------------------------------------------%
-\subsection{Proses Pelaksanaan Kerja Magang}
+\subsection{Perancangan Sistem}
 %-----------------------------------------------------------------------------%
-Selama pelaksanaan kerja magang, terdapat enam fitur utama yang dikembangkan dalam sistem \textit{HR Safety Campus}. Berikut adalah uraian dari masing-masing fitur tersebut beserta cuplikan kode program inti yang merepresentasikan logika utamanya.
+Sebelum masuk ke tahap implementasi, dilakukan perancangan struktur sistem \textit{HR Safety Campus} dalam bentuk \textit{site map} dan \textit{flowchart} untuk setiap fitur utama, guna memastikan alur navigasi dan logika bisnis terdefinisi dengan jelas sebelum proses pengkodean dimulai.
+
+\subsubsection*{Site Map Sistem}
+
+Struktur navigasi sistem \textit{HR Safety Campus} terdiri atas halaman Login yang mengarah ke Main Menu sebagai pusat navigasi, dengan delapan modul utama di bawahnya. Site map lengkap sistem ditunjukkan pada Gambar \ref{fig:sitemap}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    hub/.style={rectangle, draw, rounded corners, minimum width=3.6cm, minimum height=0.9cm, align=center},
+    box/.style={rectangle, draw, align=left, font=\footnotesize, text width=3.3cm, inner sep=6pt, rounded corners},
+    arr/.style={-Stealth}
+]
+
+\node[hub] (login) {Login};
+\node[hub, below=0.6cm of login] (menu) {Main menu (dashboard)};
+\draw[arr] (login) -- (menu);
+\draw[arr] (menu) -- ++(0,-0.8);
+
+\node[box, below=1.4cm of menu, xshift=-5.7cm] (m1) {\textbf{Registration}\\{\scriptsize\textit{employees.*}}\\[2pt]
+Daftar pegawai\\Tambah pegawai\\Edit pegawai\\Cetak ID card\\Restore data};
+
+\node[box, right=0.35cm of m1] (m2) {\textbf{Permit letter}\\{\scriptsize\textit{permits.*}}\\[2pt]
+Scan dan cari pegawai\\Simpan surat izin\\Cetak surat jalan\\Riwayat surat izin};
+
+\node[box, right=0.35cm of m2] (m3) {\textbf{Transport claim}\\{\scriptsize\textit{claims.* (gate)}}\\[2pt]
+Input dan cek kelayakan\\Simpan klaim\\Cetak klaim (batch)\\Riwayat klaim};
+
+\node[box, right=0.35cm of m3] (m4) {\textbf{Manage rates}\\{\scriptsize\textit{rates.*}}\\[2pt]
+Daftar dan tambah rute\\Edit tarif\\Arsipkan tarif lama\\Lihat dokumen};
+
+\node[box, below=0.4cm of m1] (m5) {\textbf{Approval pegawai}\\{\scriptsize\textit{approvals.* (admin)}}\\[2pt]
+Daftar pegawai pending\\Proses approval massal};
+
+\node[box, below=0.4cm of m2] (m6) {\textbf{User management}\\{\scriptsize\textit{users.* (admin)}}\\[2pt]
+Daftar pengguna\\Tambah pengguna\\Atur hak akses (RBAC)};
+
+\node[box, below=0.4cm of m3] (m7) {\textbf{Dashboard analytics}\\{\scriptsize\textit{dashboard.v2}}\\[2pt]
+Ringkasan visual TK\\Sinkronisasi lokasi manual};
+
+\node[box, below=0.4cm of m4] (m8) {\textbf{Profile}\\{\scriptsize\textit{profile.*}}\\[2pt]
+Edit profil akun\\Hapus akun};
+
+\draw[dashed, rounded corners]
+  ($(m1.north west)+(-0.3,0.5)$) rectangle ($(m8.south east)+(0.3,-0.3)$);
+\node[font=\footnotesize, anchor=north west] at ($(m1.north west)+(-0.25,0.45)$) {Modul dalam Main Menu};
+
+\end{tikzpicture}
+\caption{Site map sistem HR Safety Campus}
+\label{fig:sitemap}
+\end{figure}
+
+Gambar \ref{fig:sitemap} menunjukkan bahwa seluruh modul berada dalam satu Main Menu terpusat, dengan modul \textit{Transport Claim} dan grup \textit{Approval Pegawai}/\textit{User Management} dilindungi \textit{gate} akses khusus (\texttt{access-claim} dan \texttt{admin-only}) sebagaimana akan dijelaskan lebih lanjut pada bagian Manajemen Pengguna.
+
+\subsubsection*{Flowchart Klaim Transport}
+
+Fitur Klaim Transport memiliki dua alur validasi terpisah, yaitu \texttt{CLAIM\_IN} (klaim kedatangan) dan \texttt{CLAIM\_OUT} (klaim kepulangan), masing-masing dengan aturan bisnis berlapis sebagaimana diimplementasikan pada Kode \ref{lst:claim}. Rancangan alur validasi \texttt{CLAIM\_IN} ditunjukkan pada Gambar \ref{fig:flowchart-claimin}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=0.8cm and 1.8cm,
+    terminator/.style={rounded rectangle, draw, minimum width=2.2cm, minimum height=0.9cm, align=center},
+    io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, draw, minimum width=3.2cm, minimum height=0.9cm, align=center},
+    process/.style={rectangle, draw, minimum width=4.2cm, minimum height=1.1cm, align=center},
+    decision/.style={diamond, draw, aspect=2, minimum width=3.4cm, align=center, inner sep=1pt},
+    reject/.style={rectangle, draw, minimum width=3.2cm, minimum height=1.1cm, align=center},
+    arr/.style={-Stealth}
+]
+\node[terminator] (start) {Mulai};
+\node[io, below=of start] (input) {Ajukan klaim IN};
+\node[decision, below=of input] (d1) {Data lengkap?};
+\node[decision, below=of d1] (d2) {Kerja $\geq$ 60 hari?};
+\node[decision, below=of d2] (d3) {Sudah klaim IN?};
+\node[decision, below=of d3] (d4) {Klaim IN $<$1 tahun?};
+\node[process, below=of d4] (simpan) {Simpan klaim\\\footnotesize Hitung nominal otomatis};
+\node[terminator, below=of simpan] (selesai1) {Selesai};
+
+\node[reject, right=3.4cm of d3] (tolak) {Tolak klaim\\\footnotesize Tampilkan alasan penolakan};
+\node[terminator, below=of tolak] (selesai2) {Selesai};
+
+\draw[arr] (start) -- (input);
+\draw[arr] (input) -- (d1);
+\draw[arr] (d1) -- node[right, font=\footnotesize]{Ya} (d2);
+\draw[arr] (d1.east) -| node[above, pos=0.25, font=\footnotesize]{Tidak} (tolak.north -| d1.east) -- (tolak.north);
+\draw[arr] (d2) -- node[right, font=\footnotesize]{Ya} (d3);
+\draw[arr] (d2.east) -| (tolak.north -| d2.east);
+\draw[arr] (d3) -- node[right, font=\footnotesize]{Ya} (d4);
+\draw[arr] (d3.west) -| node[above, pos=0.5, font=\footnotesize]{Tidak, pertama kali} ++(-2.4,0) |- (simpan.west);
+\draw[arr] (d4) -- node[right, font=\footnotesize]{Tidak} (simpan);
+\draw[arr] (d4.east) -| node[above, pos=0.5, font=\footnotesize]{Ya, sudah 1x} (tolak.south);
+\draw[arr] (simpan) -- (selesai1);
+\draw[arr] (tolak) -- (selesai2);
+\end{tikzpicture}
+\caption{Flowchart validasi pengajuan Klaim Transport (CLAIM\_IN)}
+\label{fig:flowchart-claimin}
+\end{figure}
+
+Sementara itu, rancangan alur validasi \texttt{CLAIM\_OUT} yang mencakup pengecualian khusus untuk departemen \textit{Plantation} ditunjukkan pada Gambar \ref{fig:flowchart-claimout}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=0.7cm and 1.8cm,
+    terminator/.style={rounded rectangle, draw, minimum width=2.2cm, minimum height=0.9cm, align=center},
+    io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, draw, minimum width=3.2cm, minimum height=0.9cm, align=center},
+    process/.style={rectangle, draw, minimum width=4.2cm, minimum height=1.1cm, align=center},
+    decision/.style={diamond, draw, aspect=2, minimum width=3.4cm, align=center, inner sep=1pt},
+    reject/.style={rectangle, draw, minimum width=3.2cm, minimum height=1.1cm, align=center},
+    arr/.style={-Stealth}
+]
+\node[terminator] (start) {Mulai};
+\node[io, below=of start] (input) {Ajukan klaim OUT};
+\node[decision, below=of input] (d1) {Dept. Plantation?};
+\node[decision, below=of d1] (d2) {Data lengkap?};
+\node[decision, below=of d2] (d3) {Kerja $\geq$ 90 hari?};
+\node[decision, below=of d3] (d4) {Sudah CLAIM\_IN?};
+\node[decision, below=of d4] (d5) {Sudah CLAIM\_OUT?};
+\node[process, below=of d5] (simpan) {Simpan klaim OUT\\\footnotesize Hitung nominal otomatis};
+\node[terminator, below=of simpan] (selesai1) {Selesai};
+
+\node[reject, right=3.4cm of d3] (tolak) {Tolak klaim OUT\\\footnotesize Tampilkan alasan penolakan};
+\node[terminator, below=of tolak] (selesai2) {Selesai};
+
+\draw[arr] (start) -- (input);
+\draw[arr] (input) -- (d1);
+\draw[arr] (d1) -- node[right, font=\footnotesize]{Tidak} (d2);
+\draw[arr] (d1.east) -| node[above, pos=0.25, font=\footnotesize]{Ya} (tolak.north -| d1.east) -- (tolak.north);
+\draw[arr] (d2) -- node[right, font=\footnotesize]{Ya} (d3);
+\draw[arr] (d2.east) -| node[above, pos=0.25, font=\footnotesize]{Tidak} (tolak.north -| d2.east);
+\draw[arr] (d3) -- node[right, font=\footnotesize]{Ya} (d4);
+\draw[arr] (d3.east) -| (tolak.west);
+\draw[arr] (d4) -- node[right, font=\footnotesize]{Ya} (d5);
+\draw[arr] (d4.east) -| node[above, pos=0.25, font=\footnotesize]{Tidak} (tolak.south -| d4.east);
+\draw[arr] (d5) -- node[right, font=\footnotesize]{Tidak} (simpan);
+\draw[arr] (d5.east) -| node[above, pos=0.5, font=\footnotesize]{Ya} (tolak.south);
+\draw[arr] (simpan) -- (selesai1);
+\draw[arr] (tolak) -- (selesai2);
+\end{tikzpicture}
+\caption{Flowchart validasi pengajuan Klaim Transport (CLAIM\_OUT)}
+\label{fig:flowchart-claimout}
+\end{figure}
+
+%-----------------------------------------------------------------------------%
+\subsection{Implementasi Sistem}
+%-----------------------------------------------------------------------------%
+Selama pelaksanaan kerja magang, terdapat enam fitur utama yang dikembangkan dalam sistem \textit{HR Safety Campus} berdasarkan rancangan pada sub-bab sebelumnya. Berikut adalah uraian dari masing-masing fitur tersebut beserta cuplikan kode program inti yang merepresentasikan logika utamanya.
 
 \subsubsection*{Registrasi Tenaga Kerja (\textit{Employee Registration})}
 
@@ -116,9 +262,13 @@ $employee->status = $employee->isComplete() ? 'Aktif' : 'Pending';
 $employee->save();
 \end{lstlisting}
 
+Kode \ref{lst:reg} mengilustrasikan mekanisme penomoran ID karyawan yang menjamin keunikan sekaligus konsistensi data. Variabel \texttt{\$lastEmployee} mencari rekaman dengan \texttt{no\_id} terbesar pada tahun berjalan menggunakan \texttt{orderBy('no\_id', 'desc')}, bukan menghitung jumlah baris pada tabel --- pendekatan ini penting agar urutan penomoran tetap konsisten meskipun ada data yang dihapus di tengah proses. Selanjutnya, \texttt{str\_pad} memastikan format empat digit tetap terjaga (misalnya \texttt{0007}, bukan \texttt{7}). Pada bagian akhir, method \texttt{isComplete()} dipanggil untuk menentukan status awal karyawan secara otomatis, sehingga staf HR tidak perlu menetapkan status secara manual saat proses registrasi.
+
+Antarmuka Main Menu yang menjadi pusat navigasi seluruh fitur sistem ditunjukkan pada Lampiran 9 Gambar A1, sementara halaman Manage Database Pegawai yang menampilkan daftar tenaga kerja beserta status pencetakan ID Card dapat dilihat pada Gambar A2. Formulir input data pribadi dan kepegawaian yang digunakan staf HR untuk mendaftarkan tenaga kerja baru ditunjukkan pada Gambar A3, memperlihatkan pembagian dua kolom data sesuai rancangan pada Kode \ref{lst:reg}.
+
 \subsubsection*{Klaim Transport (\textit{Transport Claim})}
 
-Fitur klaim transport dirancang untuk mengelola administrasi penggantian biaya transportasi bagi tenaga kerja kontrak yang berasal dari luar daerah. Sistem ini mengelola dua jenis klaim, yaitu \texttt{CLAIM\_IN} (klaim kedatangan) dan \texttt{CLAIM\_OUT} (klaim kepulangan), masing-masing dengan aturan bisnis yang ketat. Untuk \texttt{CLAIM\_IN}, karyawan harus telah bekerja minimal 60 hari dan hanya diperbolehkan satu kali dalam setahun. Untuk \texttt{CLAIM\_OUT}, karyawan wajib sudah pernah melakukan \texttt{CLAIM\_IN} sebelumnya, dengan pengecualian karyawan dari departemen \textit{Plantation} yang tidak diperbolehkan mengajukan \texttt{CLAIM\_OUT}. Besaran nominal klaim dihitung otomatis berdasarkan kombinasi departemen dan provinsi asal karyawan, serta mendukung pemrosesan secara \textit{batch} untuk efisiensi waktu. Penerapan aturan bisnis berlapis seperti ini sejalan dengan temuan Zulkarnain dan Doke \cite{zulkarnain2026validasi}, yang menekankan bahwa validasi relasional yang ketat pada tingkat sistem berperan penting dalam menjaga integritas data transaksi sekaligus menutup celah inkonsistensi maupun kecurangan. Cuplikan validasi aturan klaim ditunjukkan pada Kode \ref{lst:claim}.
+Fitur klaim transport dirancang untuk mengelola administrasi penggantian biaya transportasi bagi tenaga kerja kontrak yang berasal dari luar daerah. Sistem ini mengelola dua jenis klaim, yaitu \texttt{CLAIM\_IN} (klaim kedatangan) dan \texttt{CLAIM\_OUT} (klaim kepulangan), masing-masing dengan aturan bisnis yang ketat, sebagaimana telah dirancang pada Gambar \ref{fig:flowchart-claimin} dan Gambar \ref{fig:flowchart-claimout}. Untuk \texttt{CLAIM\_IN}, karyawan harus telah bekerja minimal 60 hari dan hanya diperbolehkan satu kali dalam setahun. Untuk \texttt{CLAIM\_OUT}, karyawan wajib sudah pernah melakukan \texttt{CLAIM\_IN} sebelumnya, dengan pengecualian karyawan dari departemen \textit{Plantation} yang tidak diperbolehkan mengajukan \texttt{CLAIM\_OUT}. Besaran nominal klaim dihitung otomatis berdasarkan kombinasi departemen dan provinsi asal karyawan, serta mendukung pemrosesan secara \textit{batch} untuk efisiensi waktu. Penerapan aturan bisnis berlapis seperti ini sejalan dengan temuan Zulkarnain dan Doke \cite{zulkarnain2026validasi}, yang menekankan bahwa validasi relasional yang ketat pada tingkat sistem berperan penting dalam menjaga integritas data transaksi sekaligus menutup celah inkonsistensi maupun kecurangan. Cuplikan validasi aturan klaim ditunjukkan pada Kode \ref{lst:claim}.
 
 \begin{lstlisting}[language=PHP, caption={Validasi aturan bisnis berlapis pada fitur Klaim Transport}, label={lst:claim}]
 $daysWorked  = Carbon::parse($emp->join_date)->diffInDays(now());
@@ -149,6 +299,10 @@ if ($request->type === 'CLAIM_OUT' && stripos($emp->department, 'Plantation') !=
 }
 \end{lstlisting}
 
+Kode \ref{lst:claim} menunjukkan penerapan validasi berlapis yang dieksekusi secara berurutan menggunakan struktur \texttt{if-elseif}, sesuai dengan rancangan alur pada Gambar \ref{fig:flowchart-claimin} dan Gambar \ref{fig:flowchart-claimout}. Variabel \texttt{\$daysWorked} dihitung menggunakan \texttt{Carbon::diffInDays} untuk menentukan lama masa kerja karyawan terhitung sejak \texttt{join\_date}. Pada evaluasi \texttt{CLAIM\_IN}, sistem memeriksa riwayat klaim melalui \texttt{\$hasClaimIn}, kemudian membandingkan tanggal klaim terakhir (\texttt{\$last->date\_claim}) dengan tanggal saat ini untuk memastikan jeda minimal satu tahun. Sementara pada evaluasi \texttt{CLAIM\_OUT}, terdapat pengecualian khusus menggunakan \texttt{stripos(\$emp->department, 'Plantation')} yang secara otomatis melewati (\texttt{continue}) karyawan dari departemen \textit{Plantation}, sesuai kebijakan perusahaan yang tidak mengizinkan klaim kepulangan bagi departemen tersebut.
+
+Lampiran 9 Gambar A4 menunjukkan antarmuka fitur \textit{Transport Claim}, memperlihatkan alur input rombongan berdasarkan vendor serta pemilihan jenis klaim (\texttt{CLAIM\_IN} atau \texttt{CLAIM\_OUT}) sebelum sistem melakukan validasi otomatis sesuai aturan bisnis pada Kode \ref{lst:claim}.
+
 \subsubsection*{Surat Izin Keluar (\textit{Exit Permits})}
 
 Fitur surat izin keluar mengelola proses administrasi ketika tenaga kerja akan meninggalkan area kerja, baik sementara (Keluar Kembali) maupun permanen (Keluar Selamanya). Setiap surat jalan yang diterbitkan mendapatkan nomor referensi unik yang digenerate secara otomatis dengan format yang mencakup inisial kontraktor, kode \textit{``PERMIT''}, angka romawi bulan, dan tahun (contoh: 0001/MMJ/PERMIT/VI/2025). Jika jenis izin yang dipilih adalah ``Keluar Selamanya'', sistem secara otomatis mengubah status karyawan menjadi Non-Aktif di basis data. Hasil akhirnya berupa surat jalan yang dapat dicetak dalam format A4 \textit{landscape}, lengkap dengan kop surat, tabel data karyawan, dan kolom tanda tangan. Cuplikan pembuatan nomor surat jalan otomatis ditunjukkan pada Kode \ref{lst:permit}.
@@ -174,6 +328,10 @@ if ($request->type == 'Keluar Selamanya') {
     $employee->update(['status' => 'Non-Aktif']);
 }
 \end{lstlisting}
+
+Kode \ref{lst:permit} menunjukkan pembentukan nomor referensi surat jalan yang unik dan terurut per kontraktor. Fungsi \texttt{getInitials} mengekstrak inisial dari nama kontraktor (misalnya ``PT Maju Jaya'' menjadi ``MJ''), sedangkan \texttt{getRomawi} mengonversi bulan berjalan ke format angka romawi sesuai konvensi penomoran surat resmi. Pencarian \texttt{\$lastPermit} menggunakan pola \texttt{LIKE} yang menyaring berdasarkan kombinasi inisial, bulan romawi, dan tahun yang sama, sehingga nomor urut hanya bertambah relatif terhadap kontraktor dan periode yang identik. Pada bagian akhir, kondisi \texttt{Keluar Selamanya} langsung memicu perubahan status karyawan menjadi \textit{Non-Aktif}, menghindari kebutuhan pembaruan status secara manual oleh staf HR.
+
+Antarmuka fitur \textit{Exit Permits} yang menampilkan proses input rombongan, pemilihan tipe izin, serta pencetakan surat jalan ditunjukkan pada Lampiran 9 Gambar A5, sesuai dengan logika pembuatan nomor referensi otomatis pada Kode \ref{lst:permit}.
 
 \subsubsection*{Manajemen Tarif Transport (\textit{Manage Rates})}
 
@@ -214,6 +372,10 @@ DB::transaction(function () use ($data, $activePeriod, $newDocumentPath) {
 });
 \end{lstlisting}
 
+Kode \ref{lst:rates} memperlihatkan penggunaan \texttt{DB::transaction} untuk membungkus tiga langkah pembaruan tarif secara atomik --- artinya seluruh langkah akan dibatalkan (\textit{rollback}) apabila salah satu proses gagal, sehingga data tarif tidak pernah berada dalam kondisi tidak konsisten. Langkah pertama membuat rekaman arsip baru dari data periode aktif saat ini, diikuti penyalinan seluruh tarif lama ke dalam arsip tersebut pada langkah kedua. Barulah pada langkah ketiga, nilai tarif pada periode aktif diperbarui sesuai input baru. Pola ``arsipkan dahulu sebelum memperbarui'' ini memastikan jejak audit tarif lama tetap tersimpan dan dapat ditelusuri kembali kapan pun diperlukan.
+
+Lampiran 9 Gambar A6 menunjukkan antarmuka \textit{Manage Rates}, menampilkan tabel tarif aktif berdasarkan kombinasi departemen dan provinsi asal karyawan, sekaligus fitur unggah dokumen pengesahan tarif sebagaimana dijelaskan pada Kode \ref{lst:rates}.
+
 \subsubsection*{Persetujuan Karyawan (\textit{Employees Approval})}
 
 Fitur \textit{approval} merupakan lapisan kontrol kualitas data sebelum seorang tenaga kerja resmi dianggap aktif dalam sistem. Karyawan yang didaftarkan dengan data belum lengkap akan berstatus \textit{Pending} dan muncul di halaman ini. Sistem secara otomatis mengevaluasi kelengkapan data dan menampilkan label ``Data Lengkap (Siap \textit{Approve})'' atau ``Data Belum Lengkap'' pada setiap baris. Karyawan dengan data tidak lengkap tidak dapat dipilih untuk di-\textit{approve} karena \textit{checkbox}-nya dinonaktifkan otomatis. Admin dapat melakukan \textit{approval} secara massal, dan setiap perubahan status tercatat dalam riwayat histori karyawan untuk keperluan \textit{audit trail}. Cuplikan evaluasi kelengkapan data ditunjukkan pada Kode \ref{lst:approval}.
@@ -245,6 +407,10 @@ if ($emp && $emp->isComplete()) {
 }
 \end{lstlisting}
 
+Kode \ref{lst:approval} menunjukkan method \texttt{isComplete()} yang memeriksa 17 \textit{field} wajib secara \textit{looping}, dan langsung mengembalikan nilai \texttt{false} pada iterasi pertama begitu ditemukan \textit{field} yang kosong. Method ini dipanggil di dua titik berbeda: pada antarmuka untuk menonaktifkan \textit{checkbox} persetujuan, dan pada proses \textit{backend} saat \textit{approval} massal dieksekusi. Validasi ganda pada sisi \textit{backend} ini penting sebagai lapisan keamanan tambahan, karena mencegah karyawan dengan data tidak lengkap berstatus \textit{Aktif} meskipun ada upaya manipulasi permintaan (\textit{request}) dari sisi klien.
+
+Antarmuka fitur \textit{Employees Approval} yang menampilkan daftar karyawan berstatus \textit{Pending} beserta label kelengkapan data ditunjukkan pada Lampiran 9 Gambar A7, merepresentasikan mekanisme evaluasi otomatis pada Kode \ref{lst:approval}.
+
 \subsubsection*{Manajemen Pengguna (\textit{User Management})}
 
 Fitur ini memberikan kemampuan kepada administrator sistem untuk mengelola hak akses pengguna aplikasi. Administrator dapat membuat akun pengguna baru, mengatur \textit{password} awal, dan menentukan hak akses secara granular per menu, meliputi akses ke menu Registrasi, \textit{Permit Letter}, \textit{Transport Claim}, dan \textit{Manage Rates}. Sistem mengenal dua level pengguna, yaitu Administrator yang memiliki akses penuh ke seluruh fitur, dan \textit{User} biasa yang hanya dapat mengakses menu yang secara eksplisit diizinkan. Penerapan pembatasan akses ini mengadopsi konsep \textit{Role-Based Access Control} (RBAC) sebagaimana dijelaskan oleh Mary dan Febriyani \cite{mary2025rbac}. Pada sistem ini, RBAC diimplementasikan menggunakan mekanisme \textit{Gate} bawaan Laravel yang didefinisikan secara terpusat. Pengguna dengan atribut \textit{administrator} memperoleh akses penuh melalui \texttt{Gate::before}, sedangkan pengguna biasa hanya dapat membuka menu yang secara eksplisit diizinkan pada kolom \textit{permissions}, sesuai prinsip \textit{least privilege}. Setiap akun memiliki status yang dapat dikontrol: \textit{Active}, \textit{Pending}, atau \textit{Inactive}, serta terdapat mekanisme keamanan yang mencegah administrator menghapus akun miliknya sendiri secara tidak sengaja. Cuplikan definisi \textit{Gate} RBAC ditunjukkan pada Kode \ref{lst:rbac}.
@@ -274,25 +440,29 @@ Gate::define('access-rates', fn ($user) =>
 // @can('access-claim') ... @endcan
 \end{lstlisting}
 
+Kode \ref{lst:rbac} menunjukkan penerapan RBAC menggunakan mekanisme \textit{Gate} bawaan Laravel. Fungsi \texttt{Gate::before} dievaluasi terlebih dahulu sebelum \textit{gate} lainnya --- apabila pengguna cocok dengan kondisi \textit{superadmin} (email tertentu atau atribut \texttt{is\_admin}), akses penuh langsung diberikan tanpa perlu memeriksa \textit{gate} per menu. Setiap \texttt{Gate::define} merepresentasikan satu modul (misalnya \texttt{access-claim} yang berkorespondensi langsung dengan \textit{middleware} \texttt{can:access-claim} pada \textit{routing} sistem), yang memeriksa nilai pada kolom \texttt{permissions} milik pengguna. Pada sisi antarmuka, direktif Blade \texttt{@can} memastikan menu hanya dirender apabila pengguna berwenang, sehingga pembatasan akses diterapkan secara konsisten baik di sisi \textit{backend} maupun \textit{frontend}.
+
+Halaman daftar pengguna beserta peran masing-masing ditunjukkan pada Lampiran 9 Gambar A8, sedangkan formulir penambahan pengguna baru beserta pengaturan hak akses granular per menu (RBAC) ditunjukkan pada Gambar A9, sesuai dengan definisi \textit{Gate} pada Kode \ref{lst:rbac}.
+
 %-----------------------------------------------------------------------------%
 \subsection{Kendala yang Ditemukan}
 %-----------------------------------------------------------------------------%
 Dalam proses pengembangan sistem \textit{HR Safety Campus}, terdapat beberapa kendala teknis dan operasional yang dihadapi selama pelaksanaan kerja magang, di antaranya:
 
-\begin{itemize}
+\begin{enumerate}
     \item \textbf{Penyiapan Lingkungan Awal:} Pada tahap awal pengerjaan, sempat terjadi masalah kompatibilitas di perangkat pengembangan baru, di mana \textit{Composer} dan beberapa ekstensi PHP tidak terbaca oleh sistem.
     \item \textbf{Migrasi dan Duplikasi Data Masif:} Saat melakukan migrasi data dari sistem lama, ditemukan banyak sekali duplikasi data tenaga kerja (mencapai ribuan rekaman), terutama pada kolom NIK yang seharusnya unik. Hal ini membuat proses unggah (\textit{upload}) gagal karena melanggar aturan integritas basis data.
-\end{itemize}
+\end{enumerate}
 
 %-----------------------------------------------------------------------------%
 \subsection{Solusi atas Kendala yang Ditemukan}
 %-----------------------------------------------------------------------------%
 Solusi yang diterapkan untuk mengatasi kendala-kendala yang ditemukan selama proses pelaksanaan kerja magang adalah sebagai berikut:
 
-\begin{itemize}
+\begin{enumerate}
     \item \textbf{Solusi Penyiapan Lingkungan Awal:} Masalah ini diselesaikan dengan melakukan \textit{troubleshooting} pada konfigurasi \textit{environment variables} di sistem operasi dan menginstal ulang paket yang dibutuhkan hingga server pengembangan lokal dapat berjalan dengan normal.
     \item \textbf{Solusi Migrasi dan Duplikasi Data Masif:} Skrip khusus dibuat untuk menyeleksi dan memisahkan data yang ganda. Sebelum melakukan pembersihan data dengan perintah \textit{TRUNCATE} dan mengunggah ulang \textit{file} CSV yang baru, konfirmasi temuan duplikat ini selalu dilakukan kepada pihak klien untuk memastikan tidak ada data pekerja sah yang tidak sengaja terhapus. Pendekatan deduplikasi berbasis seleksi ini sejalan dengan studi Ravikanth et al. \cite{ravikanth2024deduplication} mengenai pencocokan rekaman otomatis. Cuplikan logika seleksi data tersebut ditunjukkan pada Kode \ref{lst:dedup}.
-\end{itemize}
+\end{enumerate}
 
 \begin{lstlisting}[language=PHP, caption={Logika deteksi duplikasi NIK dan pemisahan data valid pada proses migrasi}, label={lst:dedup}]
 $validRows = []; $problemRows = []; $seenNik = [];
@@ -323,3 +493,5 @@ foreach ($rows as $row) {
 // Hanya rekaman valid yang diunggah; rekaman bermasalah dilaporkan ke klien
 DB::table('employees')->insert($validRows);
 \end{lstlisting}
+
+Kode \ref{lst:dedup} menunjukkan validasi tiga lapis yang dijalankan terhadap setiap baris data sebelum diunggah ke basis data. Lapis pertama memastikan \texttt{NIK} berupa 16 digit angka murni menggunakan ekspresi reguler (\textit{regex}). Lapis kedua memeriksa duplikasi di dalam berkas yang sama menggunakan \texttt{in\_array}, sedangkan lapis ketiga memeriksa duplikasi terhadap data yang sudah tersimpan di basis data melalui \texttt{Employee::where('nik', \$nik)->exists()}. Rekaman yang lolos ketiga pemeriksaan dikumpulkan pada \texttt{\$validRows}, sementara rekaman bermasalah dicatat secara terpisah pada \texttt{\$problemRows} untuk dilaporkan kembali kepada klien, bukan dihapus begitu saja tanpa jejak. Pendekatan ini memastikan proses migrasi tetap dapat ditelusuri dan tidak kehilangan data secara diam-diam.
