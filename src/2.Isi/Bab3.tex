@@ -91,7 +91,7 @@ Bagian ini menguraikan secara umum pelaksanaan pekerjaan selama kerja magang, me
 %-----------------------------------------------------------------------------%
 Sebelum masuk ke tahap implementasi, dilakukan perancangan struktur sistem \textit{HR Safety Campus} dalam bentuk \textit{site map} dan \textit{flowchart} untuk setiap fitur utama, guna memastikan alur navigasi dan logika bisnis terdefinisi dengan jelas sebelum proses pengkodean dimulai.
 
-\subsubsection*{Site Map Sistem}
+\subsubsection{Site Map Sistem}
 
 Struktur navigasi sistem \textit{HR Safety Campus} terdiri atas halaman Login yang mengarah ke Main Menu sebagai pusat navigasi, dengan delapan modul utama di bawahnya. Site map lengkap sistem ditunjukkan pada Gambar \ref{fig:sitemap}.
 
@@ -104,7 +104,7 @@ Struktur navigasi sistem \textit{HR Safety Campus} terdiri atas halaman Login ya
 
 Gambar \ref{fig:sitemap} menunjukkan bahwa seluruh modul berada dalam satu Main Menu terpusat, dengan modul \textit{Transport Claim} dan grup \textit{Approval Pegawai}/\textit{User Management} dilindungi \textit{gate} akses khusus (\texttt{access-claim} dan \texttt{admin-only}) sebagaimana akan dijelaskan lebih lanjut pada bagian Manajemen Pengguna.
 
-\subsubsection*{Flowchart Registrasi Tenaga Kerja}
+\subsubsection{Flowchart Registrasi Tenaga Kerja}
 
 Rancangan alur penomoran ID otomatis dan penentuan status karyawan sebagaimana diimplementasikan pada Kode \ref{lst:reg} ditunjukkan pada Gambar \ref{fig:flowchart-registrasi}.
 
@@ -115,7 +115,7 @@ Rancangan alur penomoran ID otomatis dan penentuan status karyawan sebagaimana d
 \label{fig:flowchart-registrasi}
 \end{figure}
 
-\subsubsection*{Flowchart Klaim Transport}
+\subsubsection{Flowchart Klaim Transport}
 
 Fitur Klaim Transport memiliki dua alur validasi terpisah, yaitu \texttt{CLAIM\_IN} (klaim kedatangan) dan \texttt{CLAIM\_OUT} (klaim kepulangan), masing-masing dengan aturan bisnis berlapis sebagaimana diimplementasikan pada Kode \ref{lst:claim}. Rancangan alur validasi \texttt{CLAIM\_IN} ditunjukkan pada Gambar \ref{fig:flowchart-claimin}.
 
@@ -135,7 +135,7 @@ Sementara itu, rancangan alur validasi \texttt{CLAIM\_OUT} yang mencakup pengecu
 \label{fig:flowchart-claimout}
 \end{figure}
 
-\subsubsection*{Flowchart Surat Izin Keluar}
+\subsubsection{Flowchart Surat Izin Keluar}
 
 Rancangan alur pembentukan nomor referensi surat jalan otomatis serta pembaruan status karyawan sebagaimana diimplementasikan pada Kode \ref{lst:permit} ditunjukkan pada Gambar \ref{fig:flowchart-permit}.
 
@@ -146,7 +146,7 @@ Rancangan alur pembentukan nomor referensi surat jalan otomatis serta pembaruan 
 \label{fig:flowchart-permit}
 \end{figure}
 
-\subsubsection*{Flowchart Manajemen Tarif Transport}
+\subsubsection{Flowchart Manajemen Tarif Transport}
 
 Rancangan alur pembaruan tarif transport secara atomik beserta mekanisme pengarsipan sebagaimana diimplementasikan pada Kode \ref{lst:rates} ditunjukkan pada Gambar \ref{fig:flowchart-rates}.
 
@@ -157,7 +157,7 @@ Rancangan alur pembaruan tarif transport secara atomik beserta mekanisme pengars
 \label{fig:flowchart-rates}
 \end{figure}
 
-\subsubsection*{Flowchart Persetujuan Karyawan}
+\subsubsection{Flowchart Persetujuan Karyawan}
 
 Rancangan alur evaluasi kelengkapan data sebelum karyawan diaktifkan sebagaimana diimplementasikan pada Kode \ref{lst:approval} ditunjukkan pada Gambar \ref{fig:flowchart-approval}.
 
@@ -168,7 +168,7 @@ Rancangan alur evaluasi kelengkapan data sebelum karyawan diaktifkan sebagaimana
 \label{fig:flowchart-approval}
 \end{figure}
 
-\subsubsection*{Flowchart RBAC (Manajemen Pengguna)}
+\subsubsection{Flowchart RBAC (Manajemen Pengguna)}
 
 Rancangan alur pembatasan akses menu berbasis peran sebagaimana diimplementasikan pada Kode \ref{lst:rbac} ditunjukkan pada Gambar \ref{fig:flowchart-rbac}.
 
@@ -184,7 +184,7 @@ Rancangan alur pembatasan akses menu berbasis peran sebagaimana diimplementasika
 %-----------------------------------------------------------------------------%
 Selama pelaksanaan kerja magang, terdapat enam fitur utama yang dikembangkan dalam sistem \textit{HR Safety Campus} berdasarkan rancangan pada sub-bab sebelumnya. Berikut adalah uraian dari masing-masing fitur tersebut beserta cuplikan kode program inti yang merepresentasikan logika utamanya.
 
-\subsubsection*{Registrasi Tenaga Kerja (\textit{Employee Registration})}
+\subsubsection{Registrasi Tenaga Kerja (\textit{Employee Registration})}
 
 Fitur registrasi tenaga kerja merupakan pondasi utama dari seluruh sistem ini. Melalui fitur ini, staf HR dapat mendaftarkan tenaga kerja baru secara digital dengan mengisi data lengkap, mulai dari informasi pribadi seperti nama lengkap, NIK, tanggal lahir, dan jenis kelamin, hingga data kepegawaian seperti tanggal masuk kerja, jabatan, departemen, lokasi kantor, kontraktor yang menaungi, serta foto wajah tenaga kerja. Sistem juga dilengkapi penomoran ID karyawan otomatis dengan format tahun diikuti empat digit urutan (contoh: 20250001), pencarian wilayah bertingkat menggunakan data IndoRegion, penentuan status karyawan secara otomatis, fitur \textit{Re-Hire} untuk memulihkan data karyawan lama, serta cetak ID Card terintegrasi dalam format PDF menggunakan \textit{library} FPDF, sebagaimana telah dirancang pada Gambar \ref{fig:flowchart-registrasi}. Cuplikan logika pembuatan ID karyawan otomatis ditunjukkan pada Kode \ref{lst:reg}.
 
@@ -213,7 +213,7 @@ Kode \ref{lst:reg} mengilustrasikan mekanisme penomoran ID karyawan yang menjami
 
 Antarmuka Main Menu yang menjadi pusat navigasi seluruh fitur sistem ditunjukkan pada Lampiran 9 Gambar A1, sementara halaman Manage Database Pegawai yang menampilkan daftar tenaga kerja beserta status pencetakan ID Card dapat dilihat pada Gambar A2. Formulir input data pribadi dan kepegawaian yang digunakan staf HR untuk mendaftarkan tenaga kerja baru ditunjukkan pada Gambar A3, memperlihatkan pembagian dua kolom data sesuai rancangan pada Kode \ref{lst:reg}.
 
-\subsubsection*{Klaim Transport (\textit{Transport Claim})}
+\subsubsection{Klaim Transport (\textit{Transport Claim})}
 
 Fitur klaim transport dirancang untuk mengelola administrasi penggantian biaya transportasi bagi tenaga kerja kontrak yang berasal dari luar daerah. Sistem ini mengelola dua jenis klaim, yaitu \texttt{CLAIM\_IN} (klaim kedatangan) dan \texttt{CLAIM\_OUT} (klaim kepulangan), masing-masing dengan aturan bisnis yang ketat, sebagaimana telah dirancang pada Gambar \ref{fig:flowchart-claimin} dan Gambar \ref{fig:flowchart-claimout}. Untuk \texttt{CLAIM\_IN}, karyawan harus telah bekerja minimal 60 hari dan hanya diperbolehkan satu kali dalam setahun. Untuk \texttt{CLAIM\_OUT}, karyawan wajib sudah pernah melakukan \texttt{CLAIM\_IN} sebelumnya, dengan pengecualian karyawan dari departemen \textit{Plantation} yang tidak diperbolehkan mengajukan \texttt{CLAIM\_OUT}. Besaran nominal klaim dihitung otomatis berdasarkan kombinasi departemen dan provinsi asal karyawan, serta mendukung pemrosesan secara \textit{batch} untuk efisiensi waktu. Penerapan aturan bisnis berlapis seperti ini sejalan dengan temuan Zulkarnain dan Doke \cite{zulkarnain2026validasi}, yang menekankan bahwa validasi relasional yang ketat pada tingkat sistem berperan penting dalam menjaga integritas data transaksi sekaligus menutup celah inkonsistensi maupun kecurangan. Cuplikan validasi aturan klaim ditunjukkan pada Kode \ref{lst:claim}.
 
@@ -250,7 +250,7 @@ Kode \ref{lst:claim} menunjukkan penerapan validasi berlapis yang dieksekusi sec
 
 Lampiran 9 Gambar A4 menunjukkan antarmuka fitur \textit{Transport Claim}, memperlihatkan alur input rombongan berdasarkan vendor serta pemilihan jenis klaim (\texttt{CLAIM\_IN} atau \texttt{CLAIM\_OUT}) sebelum sistem melakukan validasi otomatis sesuai aturan bisnis pada Kode \ref{lst:claim}.
 
-\subsubsection*{Surat Izin Keluar (\textit{Exit Permits})}
+\subsubsection{Surat Izin Keluar (\textit{Exit Permits})}
 
 Fitur surat izin keluar mengelola proses administrasi ketika tenaga kerja akan meninggalkan area kerja, baik sementara (Keluar Kembali) maupun permanen (Keluar Selamanya), sebagaimana telah dirancang pada Gambar \ref{fig:flowchart-permit}. Setiap surat jalan yang diterbitkan mendapatkan nomor referensi unik yang digenerate secara otomatis dengan format yang mencakup inisial kontraktor, kode \textit{``PERMIT''}, angka romawi bulan, dan tahun (contoh: 0001/MMJ/PERMIT/VI/2025). Jika jenis izin yang dipilih adalah ``Keluar Selamanya'', sistem secara otomatis mengubah status karyawan menjadi Non-Aktif di basis data. Hasil akhirnya berupa surat jalan yang dapat dicetak dalam format A4 \textit{landscape}, lengkap dengan kop surat, tabel data karyawan, dan kolom tanda tangan. Cuplikan pembuatan nomor surat jalan otomatis ditunjukkan pada Kode \ref{lst:permit}.
 
@@ -280,7 +280,7 @@ Kode \ref{lst:permit} menunjukkan pembentukan nomor referensi surat jalan yang u
 
 Antarmuka fitur \textit{Exit Permits} yang menampilkan proses input rombongan, pemilihan tipe izin, serta pencetakan surat jalan ditunjukkan pada Lampiran 9 Gambar A5, sesuai dengan logika pembuatan nomor referensi otomatis pada Kode \ref{lst:permit}.
 
-\subsubsection*{Manajemen Tarif Transport (\textit{Manage Rates})}
+\subsubsection{Manajemen Tarif Transport (\textit{Manage Rates})}
 
 Fitur ini berfungsi sebagai acuan perhitungan klaim transportasi, sebagaimana telah dirancang pada Gambar \ref{fig:flowchart-rates}. HR Manager dapat mengelola master data tarif yang diorganisir berdasarkan dua dimensi utama, yaitu departemen (\textit{Harvesting} atau \textit{Plantation}) dan wilayah asal karyawan (provinsi). Setiap kombinasi memiliki tarif kedatangan (IN) dan kepulangan (OUT) yang berbeda-beda. Mekanisme pembaruan tarif dilengkapi sistem pengarsipan otomatis sehingga data lama tersimpan sebagai arsip untuk keperluan audit. Fitur ini juga mendukung pengunggahan dokumen PDF berupa surat pengesahan tarif resmi dari manajemen sebagai bukti legal penetapan tarif. Cuplikan mekanisme pengarsipan tarif lama ditunjukkan pada Kode \ref{lst:rates}.
 
@@ -323,7 +323,7 @@ Kode \ref{lst:rates} memperlihatkan penggunaan \texttt{DB::transaction} untuk me
 
 Lampiran 9 Gambar A6 menunjukkan antarmuka \textit{Manage Rates}, menampilkan tabel tarif aktif berdasarkan kombinasi departemen dan provinsi asal karyawan, sekaligus fitur unggah dokumen pengesahan tarif sebagaimana dijelaskan pada Kode \ref{lst:rates}.
 
-\subsubsection*{Persetujuan Karyawan (\textit{Employees Approval})}
+\subsubsection{Persetujuan Karyawan (\textit{Employees Approval})}
 
 Fitur \textit{approval} merupakan lapisan kontrol kualitas data sebelum seorang tenaga kerja resmi dianggap aktif dalam sistem, sebagaimana telah dirancang pada Gambar \ref{fig:flowchart-approval}. Karyawan yang didaftarkan dengan data belum lengkap akan berstatus \textit{Pending} dan muncul di halaman ini. Sistem secara otomatis mengevaluasi kelengkapan data dan menampilkan label ``Data Lengkap (Siap \textit{Approve})'' atau ``Data Belum Lengkap'' pada setiap baris. Karyawan dengan data tidak lengkap tidak dapat dipilih untuk di-\textit{approve} karena \textit{checkbox}-nya dinonaktifkan otomatis. Admin dapat melakukan \textit{approval} secara massal, dan setiap perubahan status tercatat dalam riwayat histori karyawan untuk keperluan \textit{audit trail}. Cuplikan evaluasi kelengkapan data ditunjukkan pada Kode \ref{lst:approval}.
 
@@ -358,7 +358,7 @@ Kode \ref{lst:approval} menunjukkan method \texttt{isComplete()} yang memeriksa 
 
 Antarmuka fitur \textit{Employees Approval} yang menampilkan daftar karyawan berstatus \textit{Pending} beserta label kelengkapan data ditunjukkan pada Lampiran 9 Gambar A7, merepresentasikan mekanisme evaluasi otomatis pada Kode \ref{lst:approval}.
 
-\subsubsection*{Manajemen Pengguna (\textit{User Management})}
+\subsubsection{Manajemen Pengguna (\textit{User Management})}
 
 Fitur ini memberikan kemampuan kepada administrator sistem untuk mengelola hak akses pengguna aplikasi, sebagaimana telah dirancang pada Gambar \ref{fig:flowchart-rbac}. Administrator dapat membuat akun pengguna baru, mengatur \textit{password} awal, dan menentukan hak akses secara granular per menu, meliputi akses ke menu Registrasi, \textit{Permit Letter}, \textit{Transport Claim}, dan \textit{Manage Rates}. Sistem mengenal dua level pengguna, yaitu Administrator yang memiliki akses penuh ke seluruh fitur, dan \textit{User} biasa yang hanya dapat mengakses menu yang secara eksplisit diizinkan. Penerapan pembatasan akses ini mengadopsi konsep \textit{Role-Based Access Control} (RBAC) sebagaimana dijelaskan oleh Mary dan Febriyani \cite{mary2025rbac}. Pada sistem ini, RBAC diimplementasikan menggunakan mekanisme \textit{Gate} bawaan Laravel yang didefinisikan secara terpusat. Pengguna dengan atribut \textit{administrator} memperoleh akses penuh melalui \texttt{Gate::before}, sedangkan pengguna biasa hanya dapat membuka menu yang secara eksplisit diizinkan pada kolom \textit{permissions}, sesuai prinsip \textit{least privilege}. Setiap akun memiliki status yang dapat dikontrol: \textit{Active}, \textit{Pending}, atau \textit{Inactive}, serta terdapat mekanisme keamanan yang mencegah administrator menghapus akun miliknya sendiri secara tidak sengaja. Cuplikan definisi \textit{Gate} RBAC ditunjukkan pada Kode \ref{lst:rbac}.
 
