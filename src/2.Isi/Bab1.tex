@@ -20,11 +20,13 @@ menghindari kebocoran data dan manipulasi administratif yang merugikan perusahaa
  
 PT Pratama Nusantara Sakti adalah perusahaan yang bergerak di bidang agrikultur,
 tepatnya perkebunan tebu dan produksi gula, dengan wilayah operasional yang cukup
-luas di Ogan Komering Ilir, Sumatera Selatan. Mengingat jumlah tenaga kerja yang
-mencapai ribuan orang, mengelola administrasi harian di lapangan menjadi
-tantangan yang tidak sepele bagi perusahaan. Setiap hari, tim lapangan harus
-menangani proses pendataan karyawan baru, penerbitan surat izin keluar, hingga
-pengajuan klaim penggantian biaya transportasi.
+luas di Ogan Komering Ilir, Sumatera Selatan, serta bekerja sama dengan sekitar
+53 vendor atau kontraktor penyedia tenaga kerja kontrak yang tersebar di
+berbagai provinsi asal. Mengingat jumlah tenaga kerja yang mencapai ribuan
+orang, mengelola administrasi harian di lapangan menjadi tantangan yang tidak
+sepele bagi perusahaan. Setiap hari, tim lapangan harus menangani proses
+pendataan karyawan baru, penerbitan surat izin keluar, hingga pengajuan klaim
+penggantian biaya transportasi.
  
 Saat ini, tim di lapangan masih menggunakan aplikasi berbasis Microsoft Access
 untuk mengurus registrasi pekerja, cetak surat izin keluar (\textit{permit}),
@@ -39,7 +41,18 @@ seperti Nomor Induk Kependudukan (NIK) yang ganda pada satu basis data
 Selain masalah teknis, sistem yang lama juga belum memiliki mekanisme validasi
 yang kuat. Masih ditemukan celah kecurangan dari pihak vendor, seperti klaim
 transport yang diajukan lebih dari satu kali, atau manipulasi jumlah tenaga kerja
-demi keuntungan pribadi. Hal-hal seperti ini jelas merugikan perusahaan secara finansial. Penerapan validasi relasional yang ketat pada tingkat sistem dinilai penting untuk menjaga integritas data transaksi sekaligus menutup celah kecurangan tersebut \cite{zulkarnain2026validasi}.
+demi keuntungan pribadi. Hal-hal seperti ini jelas merugikan perusahaan secara
+finansial. Sebagai gambaran, pada proses migrasi data ditemukan sekitar 20
+tenaga kerja dengan rekaman duplikat pada sistem lama; dengan asumsi setiap
+duplikasi tersebut berpotensi memungkinkan pengajuan klaim transportasi ganda
+dengan rata-rata nominal sekitar Rp2.000.000 per tenaga kerja, potensi kerugian
+finansial dari temuan tersebut diperkirakan mencapai sekitar Rp40.000.000.
+Mengingat sistem lama tidak memiliki mekanisme validasi otomatis untuk mencegah
+duplikasi semacam ini, potensi kerugian tersebut berisiko berulang pada setiap
+periode migrasi atau audit data berikutnya apabila tidak segera diatasi.
+Penerapan validasi relasional yang ketat pada tingkat sistem dinilai penting
+untuk menjaga integritas data transaksi sekaligus menutup celah kecurangan
+tersebut \cite{zulkarnain2026validasi}.
 Oleh karena itu, muncul kebutuhan mendesak untuk melakukan migrasi
 dari sistem lokal yang rentan tersebut ke sebuah platform berbasis web yang lebih
 rapi dan terpusat, yang kemudian dinamakan \textit{HR Safety Campus}
@@ -89,6 +102,7 @@ menjadi fokus penyelesaian masalah, antara lain:
 \vspace{0.5em}
  
 \begin{enumerate}
+    \item Merancang struktur navigasi sistem (\textit{site map}) dan alur logika bisnis (\textit{flowchart}) untuk keenam fitur utama sistem \textit{HR Safety Campus} sebelum tahap implementasi, guna memastikan rancangan sistem terdefinisi dengan jelas sebelum proses pengkodean dimulai.
     \item Membangun antarmuka (\textit{frontend}) sistem registrasi tenaga kerja berbasis web menggunakan pendekatan \textit{utility-first} \cite{nandan2024tailwind} untuk menggantikan antarmuka Microsoft Access yang lama, dengan siklus pengembangan mengikuti metode \textit{Waterfall} \cite{ardiyanto2023waterfall}.
     \item Merancang dan mengimplementasikan arsitektur \textit{Role-Based Access Control} (RBAC) pada logika \textit{backend} untuk membatasi akses menu pencetakan surat izin (\textit{permit}) dan klaim transportasi sesuai dengan peran masing-masing pengguna \cite{mary2025rbac}.
     \item Melakukan pembersihan data (\textit{data cleansing}) dan migrasi
